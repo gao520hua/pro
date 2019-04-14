@@ -1,7 +1,7 @@
 <template>
 	<div class="about">
 		<div class="banner">
-			
+			<img src="../../assets/about-banner.jpeg" alt="">
 		</div>
 		<div class="main">
 			<div class="section">
@@ -52,9 +52,10 @@
 		background: #f0f0f0;
 		.banner{
 			width: 1250px;
-			height: 220px;
-			background: #999;
 			margin: 0 auto;
+			img{
+				width: 100%;
+			}
 		}
 		.main{
 			.section{

@@ -3,41 +3,120 @@
 		<div class="form-box">
 			<div class="title">注册</div>
 			<div class="content">
-				<el-tabs v-model="activeName" @tab-click="handleClick">
-					<el-tab-pane label="手机注册" name="first">
-						<my-form></my-form>
-					</el-tab-pane>
-					<el-tab-pane label="邮箱注册" name="second">
-						<my-form></my-form>
-					</el-tab-pane>
-				</el-tabs>
+				<div class="tabs">
+					<div :class="['item', {'active': item.id == tabs_selected_id}]" v-for="item in tabs" @click="clickTabs(item.id)">{{item.name}}</div>
+				</div>
+				<div class="wrap">
+					<el-form label-position="left" label-width="96px" :model="formData">
+						<el-form-item :label="labels.label_1">
+							<el-input v-model="formData.phone" size="medium">
+								<el-select v-if="is_show_pl" v-model="select_val" slot="prepend" placeholder="请选择" @change="selectChange">
+									<el-option :label="item.label" :value="item.value" v-for="item in phone_list">
+										<span style="float: left;">{{item.label}}</span>
+										<span style="float: right;">{{item.value}}</span>
+									</el-option>
+								</el-select>
+							</el-input>
+						</el-form-item>
+						<el-form-item :label="labels.label_2">
+							<div class="sjyzm">
+								<el-input class="yzm-srk" v-model="formData.v_code" size="medium"></el-input>
+								<div class="button">发送验证码</div>
+							</div>
+						</el-form-item>
+						<el-form-item label="密码">
+							<el-input type="password" v-model="formData.password" size="medium" suffix-icon="el-icon-view">
+							</el-input>
+						</el-form-item>
+						<el-form-item label="确认密码">
+							<el-input type="password" v-model="formData.password2" size="medium">
+								<span slot="suffix" class="el-input__icon el-icon-view"></span>
+							</el-input>
+						</el-form-item>
+						<el-form-item>
+							<el-checkbox v-model="checked">我同意</el-checkbox>
+							<a style="color: #5d80b9;" href="">注册服务协议</a>
+						</el-form-item>
+						<el-form-item>
+							<div class="submit">注册</div>
+						</el-form-item>
+						<el-form-item></el-form-item>
+					</el-form>
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-	import MyForm from "@/components/Login/component/Form"
-	import bus from "@/eventCenter.js"
 	
 	export default {
-		components: {
-			MyForm
-		},
 		data() {
 			return {
-				activeName: "first",
+				labels: {
+					label_1: "手机",
+					label_2: "手机验证码"
+				},
+				formData: {
+					phone: "",
+					v_code: '',
+					password: "",
+					password2: "",
+				},
+				phone_list: [
+					{
+						value: "aa",
+						label: "+82"
+					},
+					{
+						value: "bb",
+						label: "+83"
+					},
+					{
+						value: "cc",
+						label: "+84"
+					},
+					{
+						value: "dd",
+						label: "+85"
+					},
+					{
+						value: "ee",
+						label: "+86"
+					},
+					{
+						value: "ff",
+						label: "+87"
+					},
+				],
+				select_val: "+86",
+				is_show_pl: true, //是否显示 手机区号下拉框。
+				checked: false,
+				tabs: [
+					{name: "手机注册", id: 1},
+					{name: "邮箱注册", id: 2}
+				],
+				tabs_selected_id: 1,  // 默认选中
 			}
 		},
 		methods: {
-			// 点击切换：
-			handleClick: function(obj) {
-				if (obj.name == "first") {
-					bus.$emit("tabChange", "phone")
-				} else {
-					bus.$emit("tabChange", "email")
-				}
+			// 选择不一样的手机号前缀：
+			selectChange: function(val) {
+				console.log(val)
 			},
+			// 选择tabs 
+			clickTabs: function(id) {
+				this.tabs_selected_id = id
+				if (id == 1) {
+					this.is_show_pl = true
+					this.labels.label_1 = "手机"
+					this.labels.label_2 = "手机验证码"
+				} else {
+					this.is_show_pl = false
+					this.labels.label_1 = "邮箱"
+					this.labels.label_2 = "邮箱验证码"
+				}
+			}
 		}
 	}
 </script>
@@ -45,9 +124,9 @@
 <style lang="scss" scoped>
 	$highlight: #32c057;
 	.register {
-		padding: 50px 0;
+		padding: 50px 0 100px;
 		.form-box{
-			width: 798px;
+			width: 480px;
 			margin: 0 auto;
 			border: 1px solid #ebeef5;
 			box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
@@ -61,10 +140,25 @@
 				border-bottom: 1px solid #ebeef5;
 			}
 			.content{
-				width: 500px;
-				margin: 50px auto;
+				padding: 0 20px;
+				.tabs{
+					display: flex;
+					margin: 30px 0 20px;
+					.item{
+						width: 50%;
+						line-height: 40px;
+						text-align: center;
+						border-bottom: 2px solid #f2f2f2;
+						cursor: pointer;
+						&.active{
+							border-color: $highlight;
+							color: $highlight;
+						}
+					}
+				}
 				.sjyzm{
 					display: flex;
+					align-items: center;
 					.yzm-srk{
 						width: 180px;
 						margin-right: 10px;
@@ -87,6 +181,7 @@
 					text-align: center;
 					color: #fff;
 					background: $highlight;
+					cursor: pointer;
 				}
 			}
 		}

@@ -10,20 +10,8 @@
 			</div>
 			<div class="content">
 				<div class="title">{{aside_list[selected_id - 1].name}}</div>
-				<div class="wrap">
-					<!-- 其实这里可以通过控制组价名称来渲染对应组件内容 -->
-					<div class="type-cont" v-show="selected_id == 1">
-					</div>
-					<div class="type-cont" v-show="selected_id == 2">
-					</div>
-					<div class="type-cont" v-show="selected_id == 3">
-					</div>
-					<div class="type-cont" v-show="selected_id == 4">
-					</div>
-					<div class="type-cont" v-show="selected_id == 5">
-					</div>
-					<div class="type-cont" v-show="selected_id == 6">
-					</div>
+				<div class="cont-wrap">
+					<component :is="currentComponent"></component>
 				</div>
 			</div>
 		</div>
@@ -31,7 +19,23 @@
 </template>
 
 <script>
+	// 引入各个组件：
+	import Address from "@/components/Account/component/Address"
+	import OrderList from "@/components/Account/component/OrderList"
+	import Message from "@/components/Account/component/Message"
+	import Money from "@/components/Account/component/Money"
+	import AccountSet from "@/components/Account/component/AccountSet"
+	import Coupon from "@/components/Account/component/Coupon"
+	
 	export default {
+		components: {
+			Address,
+			OrderList,
+			Message,
+			Money,
+			AccountSet,
+			Coupon
+		},
 		data() {
 			return {
 				aside_list: [
@@ -67,6 +71,50 @@
 					},
 				],
 				selected_id: 1,
+			}
+		},
+		mounted: function() {
+			// 对应项：
+			let type = this.$route.params.type
+			this.aside_list.forEach(item => {
+				if (item.type == type) {
+					this.selected_id = item.id
+				}
+			})
+		},
+		watch: {
+			$route(to, from) {
+				let type = to.params.type
+				this.aside_list.forEach(item => {
+					if (item.type == type) {
+						this.selected_id = item.id
+					}
+				})
+			}
+		},
+		computed: {
+			// 计算当前组价：
+			currentComponent: function() {
+				switch (this.selected_id){
+					case 1:
+						return "OrderList"
+						break;
+					case 2:
+						return "Address"
+						break
+					case 3:
+						return "Message"
+						break
+					case 4:
+						return "Money"
+						break
+					case 5:
+						return "AccountSet"
+						break
+					default:
+						return "Coupon"
+						break;
+				}
 			}
 		},
 		methods: {
@@ -131,11 +179,7 @@
 				.title{
 					font-size: 26px;
 					line-height: 58px;
-				}
-				.wrap{
-					.type-cont {
-						min-height: 300px;
-					}
+					margin-bottom: 20px;
 				}
 			}
 		}

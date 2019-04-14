@@ -152,7 +152,6 @@
 
 <style lang="scss" scoped>
 	.footer {
-		margin-top: 100px;
 		height: 250px;
 		background: #fff;
 		border-top: 1px solid #e9e9e9;

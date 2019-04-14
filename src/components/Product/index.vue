@@ -53,6 +53,7 @@
 <style lang="scss" scoped>
 	$highlight: #32c057;
 	.product{
+		padding-bottom: 100px;
 		.main{
 			.title{
 				font-size: 26px;
@@ -68,6 +69,9 @@
 					padding: 20px 24px;
 					display: flex;
 					align-items: center;
+					&:last-child{
+						border-bottom: none;
+					}
 					.picture{
 						width: 180px;
 						height: 180px;

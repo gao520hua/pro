@@ -45,24 +45,28 @@
 						<!-- <div class="title">产品详情</div> -->
 						<div class="cont">
 							我是产品详情内容哦
+							<h3>富文本区域，后端直接输出带有样式的内容</h3>
 						</div>
 					</el-tab-pane>
 					<el-tab-pane label="规格参数" name="second">
 						<!-- <div class="title">规格参数</div> -->
 						<div class="cont">
 							我是规格参数内容哦
+							<h3>富文本区域，后端直接输出带有样式的内容</h3>
 						</div>
 					</el-tab-pane>
 					<el-tab-pane label="付款方式" name="third">
 						<!-- <div class="title">付款方式</div> -->
 						<div class="cont">
 							我是付款方式内容哦
+							<h3>富文本区域，后端直接输出带有样式的内容</h3>
 						</div>
 					</el-tab-pane>
 					<el-tab-pane label="售后政策" name="fourth">
 						<!-- <div class="title">售后政策</div> -->
 						<div class="cont">
 							我是售后参数内容哦
+							<h3>富文本区域，后端直接输出带有样式的内容</h3>
 						</div>
 					</el-tab-pane>
 				</el-tabs>
