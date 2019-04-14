@@ -233,6 +233,18 @@
 						line-height: 34px;
 						font-size: 14px;
 						background: #fff;
+						&::before{
+							content: "";
+							position: absolute;
+							left: 50px;
+							top: -5px;
+							height: 6px;
+							width: 6px;
+							transform: rotate(45deg);
+							border-left: 1px solid #ebeef5;
+							border-top: 1px solid #ebeef5;
+							background: #fff;
+						}
 						&:hover{
 							box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
 						}
